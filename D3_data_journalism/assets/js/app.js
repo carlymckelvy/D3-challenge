@@ -20,6 +20,7 @@ var svg = d3.select("#scatter")
 var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+
 //*****************************
 
   // Initial Params
@@ -59,6 +60,15 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
     .attr("cx", d => newXScale(d[chosenXAxis]));
 
   return circlesGroup;
+}
+
+function renderText(circlesText, newXScale, chosenXAxis) {
+
+  circlesText.transition()
+    .duration(1000)
+    .attr("x", d => newXScale(d[chosenXAxis]));
+
+  return circlesText;
 }
 
 // function used for updating circles group with new tooltip
@@ -135,11 +145,35 @@ d3.csv("assets/data/data.csv").then(healthData => {
     .attr("class", "stateCircle")
     .attr("opacity", .5);
 
+  //   // append initial circles
+  //   var circlesGroup = chartGroup.append("g")
+  //   .selectAll("circle")
+  //   .data(healthData)
+  //   .join("circle")
+  //   .attr("cx", d => xLinearScale(d[chosenXAxis]))
+  //   .attr("cy", d => yLinearScale(d.poverty))
+  //   .attr("r", 10)
+  //   .attr("class", "stateCircle")
+  //   .attr("opacity", .5);
+
     
   console.log(chosenXAxis);
 
+  //   // // //Add text to circles
+  //   var circlesText = chartGroup.append("g")
+  //   .selectAll("text")
+  //   .data(healthData)
+  //   .join("text")
+  //   .attr("x", d => xLinearScale(d[chosenXAxis]))
+  //   .attr("y", d => yLinearScale(d.poverty))
+  //   .attr("dy", 3)
+  //   .attr("class", "stateText")
+  //   .attr("font-size", "10px")
+  //   .text(d => d.abbr)
+  //   .attr("alignment-baseline", "middle");
+
       // // //Add text to circles
-  circlesGroup.select("circle")
+  var circlesText = circlesGroup.select("circle")
     .data(healthData)
     .join("text")
     .attr("x", d => xLinearScale(d[chosenXAxis]))
@@ -192,8 +226,6 @@ d3.csv("assets/data/data.csv").then(healthData => {
         // replaces chosenXAxis with value
         chosenXAxis = value;
 
-        console.log(chosenXAxis)
-
         // functions here found above csv import
         // updates x scale for new data
         xLinearScale = xScale(healthData, chosenXAxis);
@@ -203,6 +235,8 @@ d3.csv("assets/data/data.csv").then(healthData => {
 
         // updates circles with new x values
         circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
+
+        circlesText = renderText(circlesText, xLinearScale, chosenXAxis);
 
         // updates tooltips with new info
         circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
@@ -226,6 +260,7 @@ d3.csv("assets/data/data.csv").then(healthData => {
         }
       }
     });
+
 }).catch(error => console.log(error));
 
 
