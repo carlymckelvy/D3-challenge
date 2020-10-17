@@ -75,7 +75,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 
   var toolTip = d3.tip()
     .attr("class", "d3-tip")
-    .offset([80, -60])
+    .offset([70, -50])
     .html(d => `${d.state}<br>${label} ${d[chosenXAxis]}`);
 
   circlesGroup.call(toolTip);
@@ -107,7 +107,7 @@ d3.csv("assets/data/data.csv").then(healthData => {
 
   // Create y scale function
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(healthData, d => d.poverty)])
+    .domain([0, d3.max(healthData, d => d.poverty) *1.2])
     .range([height, 0])
     .nice();
 
