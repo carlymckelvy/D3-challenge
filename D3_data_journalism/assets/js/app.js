@@ -5,7 +5,7 @@ var margin = {
   top: 20,
   right: 40,
   bottom: 100,
-  left: 40
+  left: 60
 };
 
 var width = svgWidth - margin.left - margin.right;
@@ -143,7 +143,7 @@ d3.csv("assets/data/data.csv").then(healthData => {
     .attr("cy", d => yLinearScale(d.poverty))
     .attr("r", 10)
     .attr("class", "stateCircle")
-    .attr("opacity", .5);
+    .attr("opacity", .8);
 
   //   // append initial circles
   //   var circlesGroup = chartGroup.append("g")
