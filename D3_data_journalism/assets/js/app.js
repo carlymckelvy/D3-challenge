@@ -20,9 +20,6 @@ var svg = d3.select("#scatter")
 var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-
-//*****************************
-
   // Initial Params
 var chosenXAxis = "obesity";
 
@@ -104,8 +101,6 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 // Import Data
 d3.csv("assets/data/data.csv").then(healthData => {
 
-    // Step 1: Parse Data/Cast as numbers
-    // ==============================
     healthData.forEach(data => {
       data.obesity = +data.obesity;
       data.poverty = +data.poverty;
@@ -145,32 +140,7 @@ d3.csv("assets/data/data.csv").then(healthData => {
     .attr("class", "stateCircle")
     .attr("opacity", .8);
 
-  //   // append initial circles
-  //   var circlesGroup = chartGroup.append("g")
-  //   .selectAll("circle")
-  //   .data(healthData)
-  //   .join("circle")
-  //   .attr("cx", d => xLinearScale(d[chosenXAxis]))
-  //   .attr("cy", d => yLinearScale(d.poverty))
-  //   .attr("r", 10)
-  //   .attr("class", "stateCircle")
-  //   .attr("opacity", .5);
-
-    
-  console.log(chosenXAxis);
-
-  //   // // //Add text to circles
-  //   var circlesText = chartGroup.append("g")
-  //   .selectAll("text")
-  //   .data(healthData)
-  //   .join("text")
-  //   .attr("x", d => xLinearScale(d[chosenXAxis]))
-  //   .attr("y", d => yLinearScale(d.poverty))
-  //   .attr("dy", 3)
-  //   .attr("class", "stateText")
-  //   .attr("font-size", "10px")
-  //   .text(d => d.abbr)
-  //   .attr("alignment-baseline", "middle");
+      // console.log(chosenXAxis);
 
       // // //Add text to circles
   var circlesText = circlesGroup.select("circle")
@@ -215,7 +185,6 @@ d3.csv("assets/data/data.csv").then(healthData => {
   // updateToolTip function above csv import
   var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
-
   // x axis labels event listener
   labelsGroup.selectAll("text")
     .on("click", function() {
@@ -254,12 +223,16 @@ d3.csv("assets/data/data.csv").then(healthData => {
           smokesLabel
             .classed("active", false)
             .classed("inactive", true);
-          obesityLabel
+          obesityLabelS
             .classed("active", true)
             .classed("inactive", false);
         }
       }
     });
+
+  //Update paragraph
+
+  d3.select("p").text("The dataset provided included various statistics related to income and health by state. I chose to explore the relationship between poverty rates and both obesity and smoking. The poverty rate remains static on the y-axis, with the reader selecting either the obsesity percentage or the smoking percentage to compare it with. Upon selecting one of the options, the x-axis adjusts to the proper range, with the circles indicating the state adjusting accordingly. The reader is also able to hover the mouse over any state circle and have the appropriate state name and data displayed.")
 
 }).catch(error => console.log(error));
 
