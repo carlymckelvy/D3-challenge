@@ -27,8 +27,8 @@ var chosenXAxis = "obesity";
 function xScale(healthData, chosenXAxis) {
   // create scales
   var xLinearScale = d3.scaleLinear()
-    .domain([d3.min(healthData, d => d[chosenXAxis]) * 0.8,
-      d3.max(healthData, d => d[chosenXAxis]) * 1.1
+    .domain([d3.min(healthData, d => d[chosenXAxis]) * 1,
+      d3.max(healthData, d => d[chosenXAxis]) * 1
     ])
     .range([0, width])
     .nice();
@@ -112,7 +112,7 @@ d3.csv("assets/data/data.csv").then(healthData => {
 
   // Create y scale function
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(healthData, d => d.poverty) *1.2])
+    .domain([6, d3.max(healthData, d => d.poverty) *1])
     .range([height, 0])
     .nice();
 
